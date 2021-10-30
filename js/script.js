@@ -181,9 +181,15 @@ function validator(element, regex) {
  * @param {object} element - HTML <input> element
  */
 function displayErr(element) {
-  element.parentElement.classList.add('not-valid');
-  element.parentElement.classList.remove('valid');
-  element.parentElement.lastElementChild.style.display = 'inline';
+  if (element === activitiesFieldset) {
+    activitiesFieldset.classList.add('not-valid');
+    activitiesFieldset.classList.remove('valid');
+    activitiesFieldset.lastElementChild.style.display = 'inline';
+  } else {
+    element.parentElement.classList.add('not-valid');
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'inline';
+  }
 }
 
 /**
@@ -192,9 +198,15 @@ function displayErr(element) {
  * @param {object} element - HTML <input> element
  */
 function displayOk(element) {
-  element.parentElement.classList.add('valid');
-  element.parentElement.classList.remove('not-valid');
-  element.parentElement.lastElementChild.style.display = '';
+  if (element === activitiesFieldset) {
+    element.classList.add('valid');
+    element.classList.remove('not-valid');
+    element.lastElementChild.style.display = '';
+  } else {
+    element.parentElement.classList.add('valid');
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = '';
+  }
 }
 
 form.addEventListener('submit', (e) => {
@@ -223,14 +235,10 @@ form.addEventListener('submit', (e) => {
   // If at least one activity is checked => Submit
   if (!activityIsValid()) {
     e.preventDefault();
-    activitiesFieldset.classList.add('not-valid');
-    activitiesFieldset.classList.remove('valid');
-    activitiesFieldset.lastElementChild.style.display = 'inline';
+    displayErr(activitiesFieldset);
     console.log('Prevented on activities');
   } else {
-    activitiesFieldset.classList.add('valid');
-    activitiesFieldset.classList.remove('not-valid');
-    activitiesFieldset.lastElementChild.style.display = '';
+    displayOk(activitiesFieldset);
   }
 
   // If Card payment is selected, check if card number, zip code and cvv code are valid
@@ -261,6 +269,60 @@ form.addEventListener('submit', (e) => {
       displayOk(cvvCode);
     }
   }
-  console.log('#####################Submit succes!');
-  e.preventDefault();
+  // console.log('#####################Submit succes!');
+  // e.preventDefault();
+});
+
+/**
+ * Checks if user's input is valid and displays/hides error messages accordingly
+ * 
+ * @param {object} element - HTML <input> element
+ * @param {object} regex - Regular Expression for user's info
+ */
+function validatorRealTime(element, regex){
+  if (!validator(element, regex)) {
+    displayErr(element);
+  } else {
+    displayOk(element);
+  }
+}
+
+nameField.addEventListener('keyup', () => {
+  validatorRealTime(nameField, /^.+$/);
+  // if (!validator(nameField, /^.+$/)) {
+  //   displayErr(nameField);
+  // } else {
+  //   displayOk(nameField);
+  // }
+});
+
+emailField.addEventListener('keyup', () => {
+  validatorRealTime(emailField, /^[^@]+@[^@.]+\.com$/i);
+  // if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
+  //   displayErr(emailField);
+  // } else {
+  //   displayOk(emailField);
+  // }
+});
+
+activitiesCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    if (!activityIsValid()) {
+      displayErr(activitiesFieldset);
+    } else {
+      displayOk(activitiesFieldset);
+    }
+  });
+});
+
+cardNumber.addEventListener('keyup', () => {
+  validatorRealTime(cardNumber, /^\d{13,16}$/);
+});
+
+zipCode.addEventListener('keyup', () => {
+  validatorRealTime(zipCode, /^\d{5}$/);
+});
+
+cvvCode.addEventListener('keyup', () => {
+validatorRealTime(cvvCode, /^\d{3}$/);
 });
