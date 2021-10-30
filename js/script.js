@@ -147,18 +147,6 @@ activitiesCheckboxes.forEach(checkbox => {
 });
 
 
-// POATE FAC O FUNCTIE DE VALIDARE PENTRU TOATE CAZURILE FOLOSIND REGEX
-
-function nameIsValid() {
-  const regex = /^.+$/;   // must not be blank or empty (matches any character)
-  return regex.test(nameField.value);
-}
-
-function emailIsValid() {
-  const regex = /^[^@]+@[^@.]+\.com$/i;
-  return regex.test(emailField.value);
-}
-
 /**
  * Goes through every checkbox asociated to an activity and checkes if checkbox is checked or not.
  * 
@@ -175,50 +163,64 @@ function activityIsValid() {
   return helpFlag;
 }
 
-function cardNumberIsValid() {
-  const regex = /^\d{13,16}$/;    // matches any number 13 to 16 chars long
-  return regex.test(cardNumber.value);
+/**
+ * Tests if the text inserted by user (name, email, card number, zip code, cvv code) in the <input> element matches the RegEx pattern.
+ * 
+ * @param {object} element - HTML <input> element
+ * @param {object} regex - Regular Expression for user's info
+ * @returns TRUE if input matches the RegEx, FALSE otherwise
+ */
+function validator(element, regex) {
+  // console.log(regex.test(element.value));
+  return regex.test(element.value);
 }
 
-function zipCodeIsValid() {
-  const regex = /^\d{5}$/;  // matches any number 5 chars long
-  return regex.test(zipCode.value);
+/**
+ * Emphasizes the error (makes text red), displays hint
+ * 
+ * @param {object} element - HTML <input> element
+ */
+function displayErr(element) {
+  element.parentElement.classList.add('not-valid');
+  element.parentElement.classList.remove('valid');
+  element.parentElement.lastElementChild.style.display = 'inline';
 }
 
-function cvvIsValid() {
-  const regex = /^\d{3}$/;  // matches any number 3 chars long
-  return regex.test(cvvCode.value);
+/**
+ * Hides error messages and displays a green check mark
+ * 
+ * @param {object} element - HTML <input> element
+ */
+function displayOk(element) {
+  element.parentElement.classList.add('valid');
+  element.parentElement.classList.remove('not-valid');
+  element.parentElement.lastElementChild.style.display = '';
 }
 
 form.addEventListener('submit', (e) => {
 
   // If Name is not valid => do not Submit, emphasize the error (make text red), display hint
-  if (!nameIsValid()) {
+  // If Name is valid => Submit
+  if (!validator(nameField, /^.+$/)) {
     e.preventDefault();
-    nameField.parentElement.classList.add('not-valid');
-    nameField.parentElement.classList.remove('valid');
-    nameField.parentElement.lastElementChild.style.display = 'inline';
+    displayErr(nameField);
     console.log('Prevented on name');
   } else {
-    nameField.parentElement.classList.add('valid');
-    nameField.parentElement.classList.remove('not-valid');
-    nameField.parentElement.lastElementChild.style.display = '';
+    displayOk(nameField);
   }
 
   // If Email is not valid => do not Submit, emphasize the error (make text red), display hint
-  if (!emailIsValid()) {
+  // If Email is valid => Submit
+  if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
     e.preventDefault();
-    emailField.parentElement.classList.add('not-valid');
-    emailField.parentElement.classList.remove('valid');
-    emailField.parentElement.lastElementChild.style.display = 'inline';
+    displayErr(emailField);
     console.log('Prevented on email');
   } else {
-    emailField.parentElement.classList.add('valid');
-    emailField.parentElement.classList.remove('not-valid');
-    emailField.parentElement.lastElementChild.style.display = '';
+    displayOk(emailField);
   }
 
   // If no activity is checked (is not valid), do not Submit
+  // If at least one activity is checked => Submit
   if (!activityIsValid()) {
     e.preventDefault();
     activitiesFieldset.classList.add('not-valid');
@@ -231,44 +233,32 @@ form.addEventListener('submit', (e) => {
     activitiesFieldset.lastElementChild.style.display = '';
   }
 
-  // If Card payment is selected,
-  //   check if card number, zip code and cvv code are valid
+  // If Card payment is selected, check if card number, zip code and cvv code are valid
   // If not valid => do not Submit, emphasize the error (make text red), display hint
+  // If valid => Submit
   if (paySelect.value === 'credit-card') {
-    if (!cardNumberIsValid()) {
+    if (!validator(cardNumber, /^\d{13,16}$/)) {
       e.preventDefault();
-      cardNumber.parentElement.classList.add('not-valid');
-      cardNumber.parentElement.classList.remove('valid');
-      cardNumber.parentElement.lastElementChild.style.display = 'inline';
+      displayErr(cardNumber);
       console.log('Prevented on card number');
     } else {
-      cardNumber.parentElement.classList.add('valid');
-      cardNumber.parentElement.classList.remove('not-valid');
-      cardNumber.parentElement.lastElementChild.style.display = '';
+      displayOk(cardNumber);
     }
 
-    if (!zipCodeIsValid()) {
+    if (!validator(zipCode, /^\d{5}$/)) {
       e.preventDefault();
-      zipCode.parentElement.classList.add('not-valid');
-      zipCode.parentElement.classList.remove('valid');
-      zipCode.parentElement.lastElementChild.style.display = 'inline';
+      displayErr(zipCode);
       console.log('Prevented on zip code');
     } else {
-      zipCode.parentElement.classList.add('valid');
-      zipCode.parentElement.classList.remove('not-valid');
-      zipCode.parentElement.lastElementChild.style.display = '';
+      displayOk(zipCode);
     }
 
-    if (!cvvIsValid()) {
+    if (!validator(cvvCode, /^\d{3}$/)) {
       e.preventDefault();
-      cvvCode.parentElement.classList.add('not-valid');
-      cvvCode.parentElement.classList.remove('valid');
-      cvvCode.parentElement.lastElementChild.style.display = 'inline';
+      displayErr(cvvCode);
       console.log('Prevented on cvv');
     } else {
-      cvvCode.parentElement.classList.add('valid');
-      cvvCode.parentElement.classList.remove('not-valid');
-      cvvCode.parentElement.lastElementChild.style.display = '';
+      displayOk(cvvCode);
     }
   }
   console.log('#####################Submit succes!');
