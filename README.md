@@ -1,7 +1,7 @@
 # Interactive Form
 - [x] Basic functionality
 - [x] Form Validation
-- [ ] Accesibility
+- [x] Accesibility
 
 ## Basic Functionality
 1. When the page first loads, the **"Name"** text field has the focus state by default to prompt the user.
