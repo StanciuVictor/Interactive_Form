@@ -2,7 +2,7 @@
 - [x] Basic functionality
 - [x] Form Validation
 - [x] Accesibility
-- [ ] Real-time error message
+- [x] Real-time error message
 - [ ] Conditional error message
 
 ## Basic Functionality
@@ -36,6 +36,9 @@
    - Invalid fields display a red warning sign and a hint for the user.
 
 ## Real-time error message
+For every input field, there is an event listener for keyup event. Every time the event listener is fired, the user's input is verified using the associated RegEx pattern. If the user's input does not match the RegEx pattern, the error messages are displayed according to [Accessibility](#accessibility). If the user's input does match the RegEx pattern, the error messages are hidden and a green check appears, signaling that the input is valid.
+
+For every activity checkbox, there is an event listener for change event. Every time the event listener is fired, the number of selected activities is compared to 0. If it is equal to 0, meaning no activity is selected, the error messages are displayed according to [Accessibility](#accessibility). If at least one activity is selected, the error messages are hidden and a green check appears.
 
 
 ## Conditional error message
