@@ -128,6 +128,25 @@ paySelect.addEventListener('change', () => {
   }
 });
 
+// When an activity checkbox is focused on, make it more obvious (add .focus)
+// When an activity checkbox is no longer focused on (is blurred), make it more obvious (remove .focus)
+activitiesCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener('focus', (e) => {
+    e.target.parentElement.classList.add('focus');
+  });
+
+  checkbox.addEventListener('blur', (e) => {
+    e.target.parentElement.classList.remove('focus');
+    /* 
+    * Target every .focus elemets (not necesary)
+    * [...document.getElementsByClassName('focus')].forEach(element => {
+    *   element.classList.remove('focus');
+    * });`
+    */
+  });
+});
+
+
 // POATE FAC O FUNCTIE DE VALIDARE PENTRU TOATE CAZURILE FOLOSIND REGEX
 
 function nameIsValid() {
@@ -176,19 +195,40 @@ form.addEventListener('submit', (e) => {
   // If Name is not valid => do not Submit, emphasize the error (make text red), display hint
   if (!nameIsValid()) {
     e.preventDefault();
+    nameField.parentElement.classList.add('not-valid');
+    nameField.parentElement.classList.remove('valid');
+    nameField.parentElement.lastElementChild.style.display = 'inline';
     console.log('Prevented on name');
+  } else {
+    nameField.parentElement.classList.add('valid');
+    nameField.parentElement.classList.remove('non-valid');
+    nameField.parentElement.lastElementChild.style.display = '';
   }
 
   // If Email is not valid => do not Submit, emphasize the error (make text red), display hint
   if (!emailIsValid()) {
     e.preventDefault();
+    emailField.parentElement.classList.add('not-valid');
+    emailField.parentElement.classList.remove('valid');
+    emailField.parentElement.lastElementChild.style.display = 'inline';
     console.log('Prevented on email');
+  } else {
+    emailField.parentElement.classList.add('valid');
+    emailField.parentElement.classList.remove('non-valid');
+    emailField.parentElement.lastElementChild.style.display = '';
   }
 
   // If no activity is checked (is not valid), do not Submit
   if (!activityIsValid()) {
     e.preventDefault();
+    activitiesFieldset.classList.add('not-valid');
+    activitiesFieldset.classList.remove('valid');
+    activitiesFieldset.lastElementChild.style.display = 'inline';
     console.log('Prevented on activities');
+  } else {
+    activitiesFieldset.classList.add('valid');
+    activitiesFieldset.classList.remove('non-valid');
+    activitiesFieldset.lastElementChild.style.display = '';
   }
 
   // If Card payment is selected,
@@ -197,17 +237,38 @@ form.addEventListener('submit', (e) => {
   if (paySelect.value === 'credit-card') {
     if (!cardNumberIsValid()) {
       e.preventDefault();
+      cardNumber.parentElement.classList.add('not-valid');
+      cardNumber.parentElement.classList.remove('valid');
+      cardNumber.parentElement.lastElementChild.style.display = 'inline';
       console.log('Prevented on card number');
+    } else {
+      cardNumber.parentElement.classList.add('valid');
+      cardNumber.parentElement.classList.remove('non-valid');
+      cardNumber.parentElement.lastElementChild.style.display = '';
     }
 
     if (!zipCodeIsValid()) {
       e.preventDefault();
+      zipCode.parentElement.classList.add('not-valid');
+      zipCode.parentElement.classList.remove('valid');
+      zipCode.parentElement.lastElementChild.style.display = 'inline';
       console.log('Prevented on zip code');
+    } else {
+      zipCode.parentElement.classList.add('valid');
+      zipCode.parentElement.classList.remove('non-valid');
+      zipCode.parentElement.lastElementChild.style.display = '';
     }
 
     if (!cvvIsValid()) {
       e.preventDefault();
+      cvvCode.parentElement.classList.add('not-valid');
+      cvvCode.parentElement.classList.remove('valid');
+      cvvCode.parentElement.lastElementChild.style.display = 'inline';
       console.log('Prevented on cvv');
+    } else {
+      cvvCode.parentElement.classList.add('valid');
+      cvvCode.parentElement.classList.remove('non-valid');
+      cvvCode.parentElement.lastElementChild.style.display = '';
     }
   }
   console.log('#####################Submit succes!');
