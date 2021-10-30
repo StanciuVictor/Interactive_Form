@@ -15,14 +15,20 @@
 5. In the **"Payment Info"** section the **"Credit Card"** option is selected by default. The section updates based on the user's selection.
 
 ## Form Validation
-The **"Name"** field cannot be blank or empty.
+1. The **"Name"** field cannot be blank or empty.
 
-The **"Email Address"** field must contain a validly formatted email address. The email address does not need to be a real email address, just formatted like one. For example: `dave@teamtreehouse.com`. A few characters for the username, followed by "@", followed by a few more characters and a ".com" for the domain name.
+2. The **"Email Address"** field must contain a validly formatted email address. The email address does not need to be a real email address, just formatted like one. For example: `dave@teamtreehouse.com`. A few characters for the username, followed by "@", followed by a few more characters and a ".com" for the domain name.
 
-The **"Register for Activities"** section must have at least one activity selected.
+3. The **"Register for Activities"** section must have at least one activity selected.
 
-**If and only if credit card is the selected payment method:**
-- The **"Card number"** field must contain a 13 - 16 digit credit card number with no dashes or spaces. The value does not need to be a real credit card number.
-- The **"Zip code"** field must contain a 5 digit number.
-- The **"CVV"** field must contain a 3 digit number.
+4. **If** and only **if** credit card is the selected payment method:
+   - The **"Card number"** field must contain a 13 - 16 digit credit card number with no dashes or spaces. The value does not need to be a real credit card number;
+   - The **"Zip code"** field must contain a 5 digit number;
+   - The **"CVV"** field must contain a 3 digit number.
 
+## Accessibility
+1. Focus states in the **"Register for Activities"** section are now more obvious.
+
+2. Form validation is now more obvious:
+   - Valid fields display a green check mark;
+   - Invalid fields display a red warning sign and a hint for the user.
