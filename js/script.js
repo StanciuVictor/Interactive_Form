@@ -201,7 +201,7 @@ form.addEventListener('submit', (e) => {
     console.log('Prevented on name');
   } else {
     nameField.parentElement.classList.add('valid');
-    nameField.parentElement.classList.remove('non-valid');
+    nameField.parentElement.classList.remove('not-valid');
     nameField.parentElement.lastElementChild.style.display = '';
   }
 
@@ -214,7 +214,7 @@ form.addEventListener('submit', (e) => {
     console.log('Prevented on email');
   } else {
     emailField.parentElement.classList.add('valid');
-    emailField.parentElement.classList.remove('non-valid');
+    emailField.parentElement.classList.remove('not-valid');
     emailField.parentElement.lastElementChild.style.display = '';
   }
 
@@ -227,7 +227,7 @@ form.addEventListener('submit', (e) => {
     console.log('Prevented on activities');
   } else {
     activitiesFieldset.classList.add('valid');
-    activitiesFieldset.classList.remove('non-valid');
+    activitiesFieldset.classList.remove('not-valid');
     activitiesFieldset.lastElementChild.style.display = '';
   }
 
@@ -243,7 +243,7 @@ form.addEventListener('submit', (e) => {
       console.log('Prevented on card number');
     } else {
       cardNumber.parentElement.classList.add('valid');
-      cardNumber.parentElement.classList.remove('non-valid');
+      cardNumber.parentElement.classList.remove('not-valid');
       cardNumber.parentElement.lastElementChild.style.display = '';
     }
 
@@ -255,7 +255,7 @@ form.addEventListener('submit', (e) => {
       console.log('Prevented on zip code');
     } else {
       zipCode.parentElement.classList.add('valid');
-      zipCode.parentElement.classList.remove('non-valid');
+      zipCode.parentElement.classList.remove('not-valid');
       zipCode.parentElement.lastElementChild.style.display = '';
     }
 
@@ -267,7 +267,7 @@ form.addEventListener('submit', (e) => {
       console.log('Prevented on cvv');
     } else {
       cvvCode.parentElement.classList.add('valid');
-      cvvCode.parentElement.classList.remove('non-valid');
+      cvvCode.parentElement.classList.remove('not-valid');
       cvvCode.parentElement.lastElementChild.style.display = '';
     }
   }
