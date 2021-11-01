@@ -1,5 +1,6 @@
 const nameField = document.getElementById('name');
 const emailField = document.getElementById('email');
+const emailHint = document.getElementById('email-hint');
 const otherJobField = document.getElementById('other-job-role');
 const jobRoleSelect = document.getElementById('title');
 const colorSelect = document.getElementById('color');
@@ -128,6 +129,16 @@ paySelect.addEventListener('change', () => {
   }
 });
 
+
+/*
+* ####################################################################
+*
+*       Form validation AND Accessibility
+*
+* ####################################################################
+*/
+
+
 // When an activity checkbox is focused on, make it more obvious (add .focus)
 // When an activity checkbox is no longer focused on (is blurred), make it more obvious (remove .focus)
 activitiesCheckboxes.forEach(checkbox => {
@@ -224,6 +235,7 @@ form.addEventListener('submit', (e) => {
   // If Email is not valid => do not Submit, emphasize the error (make text red), display hint
   // If Email is valid => Submit
   if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
+    emailHint.innerHTML = 'Email address must be formatted correctly';
     e.preventDefault();
     displayErr(emailField);
     console.log('Prevented on email');
@@ -273,13 +285,23 @@ form.addEventListener('submit', (e) => {
   // e.preventDefault();
 });
 
+
+/*
+* ####################################################################
+*
+*       Real-time error message AND Conditional error message (email only)
+*
+* ####################################################################
+*/
+
+
 /**
  * Checks if user's input is valid and displays/hides error messages accordingly
  * 
  * @param {object} element - HTML <input> element
  * @param {object} regex - Regular Expression for user's info
  */
-function validatorRealTime(element, regex){
+function validatorRealTime(element, regex) {
   if (!validator(element, regex)) {
     displayErr(element);
   } else {
@@ -289,20 +311,37 @@ function validatorRealTime(element, regex){
 
 nameField.addEventListener('keyup', () => {
   validatorRealTime(nameField, /^.+$/);
-  // if (!validator(nameField, /^.+$/)) {
-  //   displayErr(nameField);
-  // } else {
-  //   displayOk(nameField);
-  // }
+  /* Refactored
+  if (!validator(nameField, /^.+$/)) {
+    displayErr(nameField);
+  } else {
+    displayOk(nameField);
+  }
+  */
 });
 
 emailField.addEventListener('keyup', () => {
-  validatorRealTime(emailField, /^[^@]+@[^@.]+\.com$/i);
-  // if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
-  //   displayErr(emailField);
-  // } else {
-  //   displayOk(emailField);
-  // }
+  // validatorRealTime(emailField, /^[^@]+@[^@.]+\.com$/i);
+
+  /* Refactored
+  if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
+    displayErr(emailField);
+  } else {
+    displayOk(emailField);
+  }
+  */
+
+  emailHint.innerHTML = 'Email address must be formatted correctly';
+
+  if (emailField.value === '') {
+    emailHint.innerHTML = 'Please write your email address';
+    displayErr(emailField);
+  } else if (!validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
+    emailHint.innerHTML = 'Email address must match the format: example@example.com';
+    displayErr(emailField);
+  } else if (validator(emailField, /^[^@]+@[^@.]+\.com$/i)) {
+    displayOk(emailField);
+  }
 });
 
 activitiesCheckboxes.forEach(checkbox => {
@@ -324,5 +363,5 @@ zipCode.addEventListener('keyup', () => {
 });
 
 cvvCode.addEventListener('keyup', () => {
-validatorRealTime(cvvCode, /^\d{3}$/);
+  validatorRealTime(cvvCode, /^\d{3}$/);
 });

@@ -3,7 +3,7 @@
 - [x] Form Validation
 - [x] Accesibility
 - [x] Real-time error message
-- [ ] Conditional error message
+- [x] Conditional error message
 
 ## Basic Functionality
 1. When the page first loads, the **"Name"** text field has the focus state by default to prompt the user.
@@ -42,3 +42,7 @@ For every activity checkbox, there is an event listener for change event. Every 
 
 
 ## Conditional error message
+After the user begins to type:
+- If the **"Email Address"** field becomes empty (the user deletes the address) the error message "Please write your email address" will be displayed;
+- If the email address writen by the user does not match the RegEx pattern (see [Form Validation](#form-validation)), the error message "Email address must match the format: `example@example.com`" will be displayed;
+- If the email address writen by the user is valid, the error message is hidden and the green check mark is displayed, meaning the form can be submitted.
