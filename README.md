@@ -40,7 +40,6 @@ For every input field, there is an event listener for keyup event. Every time th
 
 For every activity checkbox, there is an event listener for change event. Every time the event listener is fired, the number of selected activities is compared to 0. If it is equal to 0, meaning no activity is selected, the error messages are displayed according to [Accessibility](#accessibility). If at least one activity is selected, the error messages are hidden and a green check appears.
 
-
 ## Conditional error message
 After the user begins to type:
 - If the **"Email Address"** field becomes empty (the user deletes the address) the error message "Please write your email address" will be displayed;

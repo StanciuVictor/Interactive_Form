@@ -74,7 +74,7 @@ activitiesFieldset.addEventListener('change', (e) => {
   const activity = e.target;
 
   // Get price for chosen activity (transform string to number)
-  const activityCost = parseInt(activity.getAttribute("data-cost"), 10);
+  const activityCost = parseInt(activity.getAttribute('data-cost'), 10);
 
   // If activity is checked (clicked)
   if (activity.checked) {
@@ -82,7 +82,7 @@ activitiesFieldset.addEventListener('change', (e) => {
     // Go through all activities and disable those who have the same time and date, except the activity that was checked (clicked)
     // Set class 'disabled' for those checkboxes' parent
     workshopCheckboxes.forEach(checkbox => {
-      if ((activity.getAttribute('data-day-and-time') === checkbox.getAttribute('data-day-and-time')) && (activity !== checkbox)) {
+      if (activity.getAttribute('data-day-and-time') === checkbox.getAttribute('data-day-and-time') && activity !== checkbox) {
         checkbox.disabled = true;
         checkbox.parentElement.classList.add('disabled');
       }
@@ -97,7 +97,7 @@ activitiesFieldset.addEventListener('change', (e) => {
     // Go through all activities and enable those who have the same time and date, except the activity that was unchecked (clicked again)
     // Remove class 'disabled' for those checkboxes' parent
     workshopCheckboxes.forEach(checkbox => {
-      if ((activity.getAttribute('data-day-and-time') === checkbox.getAttribute('data-day-and-time')) && (activity !== checkbox)) {
+      if (activity.getAttribute('data-day-and-time') === checkbox.getAttribute('data-day-and-time') && activity !== checkbox) {
         checkbox.disabled = false;
         checkbox.parentElement.classList.remove('disabled');
       }
@@ -131,12 +131,12 @@ paySelect.addEventListener('change', () => {
 
 
 /*
-* ####################################################################
-*
-*       Form validation AND Accessibility
-*
-* ####################################################################
-*/
+ * ####################################################################
+ *
+ *       Form validation AND Accessibility
+ *
+ * ####################################################################
+ */
 
 
 // When an activity checkbox is focused on, make it more obvious (add .focus)
@@ -148,12 +148,12 @@ activitiesCheckboxes.forEach(checkbox => {
 
   checkbox.addEventListener('blur', (e) => {
     e.target.parentElement.classList.remove('focus');
-    /* 
-    * Target every .focus elemets (not necesary)
-    * [...document.getElementsByClassName('focus')].forEach(element => {
-    *   element.classList.remove('focus');
-    * });`
-    */
+    /*
+     * Target every .focus elemets (not necesary)
+     * [...document.getElementsByClassName('focus')].forEach(element => {
+     *   element.classList.remove('focus');
+     * });`
+     */
   });
 });
 
@@ -164,7 +164,7 @@ activitiesCheckboxes.forEach(checkbox => {
  * @returns Number of checked boxes. If zero, it will be evaluated as NOT VALID and
  * will preventDefault() in the 'submit' eventListeneer
  */
-function activityIsValid() {
+function activityIsValid () {
   let helpFlag = 0;
   activitiesCheckboxes.forEach(checkbox => {
     if (checkbox.checked) {
@@ -176,22 +176,22 @@ function activityIsValid() {
 
 /**
  * Tests if the text inserted by user (name, email, card number, zip code, cvv code) in the <input> element matches the RegEx pattern.
- * 
+ *
  * @param {object} element - HTML <input> element
  * @param {object} regex - Regular Expression for user's info
  * @returns TRUE if input matches the RegEx, FALSE otherwise
  */
-function validator(element, regex) {
+function validator (element, regex) {
   // console.log(regex.test(element.value));
   return regex.test(element.value);
 }
 
 /**
  * Emphasizes the error (makes text red), displays hint
- * 
+ *
  * @param {object} element - HTML <input> element
  */
-function displayErr(element) {
+function displayErr (element) {
   if (element === activitiesFieldset) {
     activitiesFieldset.classList.add('not-valid');
     activitiesFieldset.classList.remove('valid');
@@ -205,10 +205,10 @@ function displayErr(element) {
 
 /**
  * Hides error messages and displays a green check mark
- * 
+ *
  * @param {object} element - HTML <input> element
  */
-function displayOk(element) {
+function displayOk (element) {
   if (element === activitiesFieldset) {
     element.classList.add('valid');
     element.classList.remove('not-valid');
@@ -287,21 +287,21 @@ form.addEventListener('submit', (e) => {
 
 
 /*
-* ####################################################################
-*
-*       Real-time error message AND Conditional error message (email only)
-*
-* ####################################################################
-*/
+ * ####################################################################
+ *
+ *       Real-time error message AND Conditional error message (email only)
+ *
+ * ####################################################################
+ */
 
 
 /**
  * Checks if user's input is valid and displays/hides error messages accordingly
- * 
+ *
  * @param {object} element - HTML <input> element
  * @param {object} regex - Regular Expression for user's info
  */
-function validatorRealTime(element, regex) {
+function validatorRealTime (element, regex) {
   if (!validator(element, regex)) {
     displayErr(element);
   } else {
@@ -310,14 +310,11 @@ function validatorRealTime(element, regex) {
 }
 
 nameField.addEventListener('keyup', () => {
-  validatorRealTime(nameField, /^.+$/);
-  /* Refactored
-  if (!validator(nameField, /^.+$/)) {
+  if (!validator(nameField, /^.+$/) || validator(nameField, /^\s*$/)) {
     displayErr(nameField);
   } else {
     displayOk(nameField);
   }
-  */
 });
 
 emailField.addEventListener('keyup', () => {
